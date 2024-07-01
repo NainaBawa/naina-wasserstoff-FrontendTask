@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder, faFile, faFolderPlus, faFileAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faFolder, faFile, faFolderPlus, faFileAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useIDE } from '../contexts/IDEContext';
 
 // SidebarItem for rendering each item (folder or file as in structure) in the sidebar
-const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick }) => {
+const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick, handleDelete }) => {
   if (item.type === 'folder') {
     return (
       <div className="ml-4 mt-2 relative">
@@ -20,6 +20,9 @@ const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick
             <button onClick={() => onCreateFile([...path, item.name])} className="p-1">
               <FontAwesomeIcon icon={faFileAlt} />
             </button>
+            {path.length ? <button onClick={() => handleDelete([...path, item.name], 'folder')} className="p-1">
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </button> : null}
           </div>
         </div>
         <div className="ml-4">
@@ -31,6 +34,7 @@ const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick
               onCreateFolder={onCreateFolder}
               onCreateFile={onCreateFile}
               handleFileClick={handleFileClick}
+              handleDelete={handleDelete}
             />
           ))}
         </div>
@@ -38,17 +42,24 @@ const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick
     );
   } else {
     return (
-      <div className="ml-4 mt-2 cursor-pointer flex items-center text-vscode-text" onClick={() => handleFileClick(item)}>
-        <FontAwesomeIcon icon={faFile} className="mr-2 text-vscode-file" />
-        <span>{item.name}</span>
-      </div>
+      <div className="sidebar-item flex justify-between items-center text-vscode-text">
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faFile} className="mr-2 text-vscode-file" />
+            <span>{item.name}</span>
+          </div>
+          <div className="flex items-center sidebar-icons">
+            <button onClick={() => handleDelete([...path, item.name], 'folder')} className="p-1">
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </button>
+          </div>
+        </div>
     );
   }
 };
 
 // Sidebar to render the entire sidebar
 const Sidebar = ({ structure, isSidebarOpen }) => {
-  const { handleCreateFolder, handleCreateFile, handleFileClick } = useIDE();
+  const { handleCreateFolder, handleCreateFile, handleFileClick, handleDelete } = useIDE();
 
   return (
     <div className={`md:visible md:relative md:w-1/5 fixed top-0 left-0 h-full w-3/4 bg-vscode-sidebar z-50 overflow-y-auto overflow-x-auto transform transition-transform ease-in-out  ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
@@ -65,6 +76,7 @@ const Sidebar = ({ structure, isSidebarOpen }) => {
               onCreateFolder={handleCreateFolder}
               onCreateFile={handleCreateFile}
               handleFileClick={handleFileClick}
+              handleDelete={handleDelete}
             />
           ))}
         </div>

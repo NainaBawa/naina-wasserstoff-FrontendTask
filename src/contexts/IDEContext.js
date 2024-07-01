@@ -87,6 +87,37 @@ export const IDEProvider = ({ children }) => {
     }));
   };
 
+  const deleteFolderOrFile = (currentStructure, path) => {
+    if (path.length === 0) {
+      return currentStructure;
+    }
+  
+    return currentStructure.filter((node) => {
+      if (node.name === path[0]) {
+        if (path.length === 1) {
+          return false; // Delete the node
+        } else if (node.type === 'folder') {
+          node.children = deleteFolderOrFile(node.children, path.slice(1));
+        }
+      }
+      return true;
+    });
+  };
+  
+  // Handler for deleting folder or file
+  const handleDelete = (path, type) => {
+    setStructure((prevStructure) => deleteFolderOrFile(prevStructure, path));
+  
+    if (type === 'file') {
+      const filePath = path.join('/');
+      setFileContents((prevContents) => {
+        const newContents = { ...prevContents };
+        delete newContents[filePath];
+        return newContents;
+      });
+    }
+  };
+
   // Handler for submitting input name for folder/file
   const handleModalSubmit = (name) => {
     setModalOpen(false);
@@ -127,6 +158,7 @@ export const IDEProvider = ({ children }) => {
         handleCreateFile,
         handleFileClick,
         updateFileContent,
+        handleDelete
       }}
     >
       {children}

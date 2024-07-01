@@ -28,12 +28,12 @@ export default function Home() {
       <p>Select a file to view its content</p>
       <p>OR</p>
       <p>Create a new file with:</p>
-      <p className='pl-16 pt-2'>
+      <div className='pl-16 pt-2'>
         <p>.ed for Text File</p>
         <p>.lt for List File</p>
         <p>.note for Note File</p>
         <p>.Readme for Readme File</p>
-      </p>
+      </div>
 
     </div>;
 
