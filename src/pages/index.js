@@ -24,7 +24,18 @@ export default function Home() {
   };
 
   const EditorPanel = () => {
-    if (!selectedFile) return <div className="h-full flex items-center justify-center text-center text-vscode-text">Select a file to view its content</div>;
+    if (!selectedFile) return <div className="h-full flex flex-col items-center justify-center text-vscode-text">
+      <p>Select a file to view its content</p>
+      <p>OR</p>
+      <p>Create a new file with:</p>
+      <p className='pl-16 pt-2'>
+        <p>.ed for Text File</p>
+        <p>.lt for List File</p>
+        <p>.note for Note File</p>
+        <p>.Readme for Readme File</p>
+      </p>
+
+    </div>;
 
     const filePath = selectedFile.path.length > 0 ? `${selectedFile.path.join('/')}/${selectedFile.name}` : selectedFile.name;
     const extension = selectedFile.name.split('.').pop();
@@ -42,9 +53,9 @@ export default function Home() {
           />
         );
       case 'note':
-        return <NoteMaker notes={fileContents[filePath]} setNotes={updateFileContent} filePath={filePath} fileName={selectedFile.name}/>;
+        return <NoteMaker notes={fileContents[filePath]} setNotes={updateFileContent} filePath={filePath} fileName={selectedFile.name} />;
       case 'lt':
-        return <ListMaker list={fileContents[filePath]} setList={updateFileContent} filePath={filePath} fileName={selectedFile.name}/>;
+        return <ListMaker list={fileContents[filePath]} setList={updateFileContent} filePath={filePath} fileName={selectedFile.name} />;
       case 'readme':
         return (
           <ReadmePreviewer
@@ -55,7 +66,7 @@ export default function Home() {
           />
         );
       default:
-        return <div className="text-center text-vscode-text">Unsupported file type</div>;
+        return <div className="h-full flex items-center justify-center text-center text-vscode-text">Unsupported file type</div>;
     }
   };
 
