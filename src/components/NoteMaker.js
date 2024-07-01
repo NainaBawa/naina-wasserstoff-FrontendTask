@@ -53,8 +53,9 @@ const NoteMaker = ({ notes, setNotes, filePath }) => {
             {/* Drag and Drop Area */}
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <div className="flex flex-col md:flex-row md:space-x-4">
+                     {/* Droppable areas */}
                     {categories.map(category => (
-                        <Droppable key={category} droppableId={category}> {/* Droppable areas */}
+                        <Droppable key={category} droppableId={category}>
                             {(provided) => (
                                 <div
                                     ref={provided.innerRef}
@@ -62,10 +63,11 @@ const NoteMaker = ({ notes, setNotes, filePath }) => {
                                     className="flex-1 p-4 bg-gray-700 rounded-lg shadow-md mt-4 md:mt-0"
                                 >
                                     <h2 className="text-lg font-semibold mb-4 text-gray-200">{category}</h2>
+                                    {/* Draggable components */}
                                     {notes
                                         .filter(note => note.category === category)
                                         .map((note, index) => (
-                                            <Draggable key={note.id} draggableId={note.id} index={index}> {/* Draggable components */}
+                                            <Draggable key={note.id} draggableId={note.id} index={index}>
                                                 {(provided) => (
                                                     <div
                                                         ref={provided.innerRef}
