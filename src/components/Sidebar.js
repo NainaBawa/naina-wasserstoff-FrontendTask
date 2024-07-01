@@ -42,7 +42,7 @@ const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick
     );
   } else {
     return (
-      <div className="sidebar-item flex justify-between items-center text-vscode-text">
+      <div className="ml-4 mt-2 sidebar-item flex justify-between items-center text-vscode-text">
           <div className="flex items-center cursor-pointer" onClick={() => handleFileClick(item)}>
             <FontAwesomeIcon icon={faFile} className="mr-2 text-vscode-file" />
             <span>{item.name}</span>
