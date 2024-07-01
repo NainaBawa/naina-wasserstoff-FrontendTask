@@ -12,14 +12,8 @@ module.exports = {
         'vscode-sidebar': '#252526',
         'vscode-text': '#d4d4d4',
         'vscode-ide-text': '#010B13',
-        'vscode-accent': '#007acc',
         'vscode-folder': '#569cd6',
         'vscode-file': '#ce9178',
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },

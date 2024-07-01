@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import Modal from '../components/Modal';
 
 const IDEContext = createContext();
 
@@ -14,7 +15,10 @@ export const IDEProvider = ({ children }) => {
 
   const [structure, setStructure] = useState(initialStructure);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [fileContents, setFileContents] = useState({}); // To store file contents
+  const [fileContents, setFileContents] = useState({});
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('');
+  const [currentPath, setCurrentPath] = useState([]);
 
   const addFolderOrFile = (currentStructure, path, item) => {
     if (path.length === 0) {
@@ -33,46 +37,18 @@ export const IDEProvider = ({ children }) => {
   };
 
   const handleCreateFolder = (path = []) => {
-    const name = prompt('Enter folder name:');
-    if (name) {
-      setStructure((prevStructure) =>
-        addFolderOrFile(prevStructure, path, { type: 'folder', name, children: [], path: path })
-      );
-    }
+    setModalOpen(true);
+    setModalType('folder');
+    setCurrentPath(path);
   };
 
   const handleCreateFile = (path = []) => {
-    const name = prompt('Enter file name:');
-    if (name) {
-      const filePath = path.length > 0 ? `${path.join('/')}/${name}` : name;
-
-      console.log("handleCreateFile", filePath, path)
-      setStructure((prevStructure) =>
-        addFolderOrFile(prevStructure, path, { type: 'file', name , path: path})
-      );
-
-      const extension = name.split('.').pop();
-      let content;
-
-      if (extension === 'ed') {
-        content = '';
-      } else if (extension === 'note' || extension === 'lt') {
-        content = [];
-      } else if (extension === 'readme') {
-        content = '';
-      } else {
-        content = null;
-      }
-
-      setFileContents((prevContents) => ({
-        ...prevContents,
-        [filePath]: content,
-      }));
-    }
+    setModalOpen(true);
+    setModalType('file');
+    setCurrentPath(path);
   };
 
   const handleFileClick = (file) => {
-    console.log("handleFileClick", file)
     setSelectedFile(file);
   };
 
@@ -81,6 +57,35 @@ export const IDEProvider = ({ children }) => {
       ...prevContents,
       [filePath]: content,
     }));
+  };
+
+  const handleModalSubmit = (name) => {
+    setModalOpen(false);
+    if (name) {
+      const item = { type: modalType, name, children: modalType === 'folder' ? [] : undefined, path: currentPath };
+      const filePath = currentPath.length > 0 ? `${currentPath.join('/')}/${name}` : name;
+      setStructure((prevStructure) => addFolderOrFile(prevStructure, currentPath, item));
+      
+      if (modalType === 'file') {
+        const extension = name.split('.').pop();
+        let content;
+
+        if (extension === 'ed') {
+          content = '';
+        } else if (extension === 'note' || extension === 'lt') {
+          content = [];
+        } else if (extension === 'readme') {
+          content = '';
+        } else {
+          content = null;
+        }
+
+        setFileContents((prevContents) => ({
+          ...prevContents,
+          [filePath]: content,
+        }));
+      }
+    }
   };
 
   return (
@@ -96,6 +101,12 @@ export const IDEProvider = ({ children }) => {
       }}
     >
       {children}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={handleModalSubmit}
+        isFolder={modalType === 'folder'}
+      />
     </IDEContext.Provider>
   );
 };
