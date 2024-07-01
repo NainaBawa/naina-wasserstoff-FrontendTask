@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { marked } from 'marked';
 
 // ReadmePreviewer for editing and previewing .readme files
-const ReadmePreviewer = ({ content, setReadme, filePath }) => {
+const ReadmePreviewer = ({ content, setReadme, filePath, fileName }) => {
     const [previewMode, setPreviewMode] = useState(false);
     const [formattedContent, setFormattedContent] = useState(content);
 
@@ -26,6 +26,7 @@ const ReadmePreviewer = ({ content, setReadme, filePath }) => {
     return (
         <div className="p-6 bg-gray-800 h-full text-white">
             <div className="flex justify-between mb-4">
+                <h2 className="text-lg font-semibold">{fileName}</h2>
                 <h2 className="text-lg font-semibold">Readme Editor</h2>
                 <button
                     onClick={togglePreview}

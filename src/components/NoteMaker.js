@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 // Notes editor for .note files
-const NoteMaker = ({ notes, setNotes, filePath }) => {
+const NoteMaker = ({ notes, setNotes, filePath, fileName }) => {
     const [noteText, setNoteText] = useState('');
     const categories = ['To Do', 'In Progress', 'Done'];
 
@@ -36,6 +36,9 @@ const NoteMaker = ({ notes, setNotes, filePath }) => {
 
     return (
         <div className="p-6 bg-gray-800 h-full text-white">
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-lg font-bold text-center text-vscode-text">{fileName}</h1>
+            </div>
             <div className="max-w-md mx-auto mb-4 flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2">
                 <input
                     value={noteText}
@@ -53,7 +56,7 @@ const NoteMaker = ({ notes, setNotes, filePath }) => {
             {/* Drag and Drop Area */}
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <div className="flex flex-col md:flex-row md:space-x-4">
-                     {/* Droppable areas */}
+                    {/* Droppable areas */}
                     {categories.map(category => (
                         <Droppable key={category} droppableId={category}>
                             {(provided) => (

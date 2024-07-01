@@ -35,21 +35,23 @@ export default function Home() {
         return (
           <TextEditor
             content={fileContents[filePath]}
+            fileName={selectedFile.name}
             onChange={(content) =>
               updateFileContent(filePath, content)
             }
           />
         );
       case 'note':
-        return <NoteMaker notes={fileContents[filePath]} setNotes={updateFileContent} filePath={filePath} />;
+        return <NoteMaker notes={fileContents[filePath]} setNotes={updateFileContent} filePath={filePath} fileName={selectedFile.name}/>;
       case 'lt':
-        return <ListMaker list={fileContents[filePath]} setList={updateFileContent} filePath={filePath} />;
+        return <ListMaker list={fileContents[filePath]} setList={updateFileContent} filePath={filePath} fileName={selectedFile.name}/>;
       case 'readme':
         return (
           <ReadmePreviewer
             content={fileContents[filePath]}
             setReadme={updateFileContent}
             filePath={filePath}
+            fileName={selectedFile.name}
           />
         );
       default:

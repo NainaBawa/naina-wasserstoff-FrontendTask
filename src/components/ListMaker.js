@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // List editor for .lt files
-const ListMaker = ({ list, setList, filePath }) => {
+const ListMaker = ({ list, setList, filePath, fileName }) => {
     const [itemText, setItemText] = useState('');
 
     const addItem = () => {
@@ -11,6 +11,9 @@ const ListMaker = ({ list, setList, filePath }) => {
 
     return (
         <div className="p-6 bg-gray-800 h-full text-white">
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-lg font-bold text-center text-vscode-text">{fileName}</h1>
+            </div>
             <div className="max-w-md mx-auto mb-4 flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2">
                 <input
                     value={itemText}
