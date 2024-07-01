@@ -1,5 +1,7 @@
 ## Super Editor
-This project is a web-based IDE built with Next.js and Tailwind CSS. It features a folder and file structure, supporting various file types with specific functionalities. The application is styled to resemble VS Code and is deployed on Vercel.
+Available at [Super Editor](https://super-editor.netlify.app/) <br/>
+This project is a web-based IDE built with Next.js and Tailwind CSS. It features a folder and file structure, supporting various file types with specific functionalities. The application is styled to resemble VS Code and is deployed on Netlify.
+![image](https://github.com/NainaBawa/naina-wasserstoff-FrontendTask/assets/109498144/1c709202-6b49-4afd-a16c-b2ff8e6bc361)
 
 ## Table of Contents
 
@@ -20,7 +22,7 @@ This project is a web-based IDE built with Next.js and Tailwind CSS. It features
   - `.readme` files: README file previewer.
 - **State Management**: Clean and organized state management using React Context.
 - **Styling**: Responsive design with animations using Tailwind CSS.
-- **Deployment**: Deployed on Vercel.
+- **Deployment**: Deployed on Netlify.
 
 ## Technologies Used
 
