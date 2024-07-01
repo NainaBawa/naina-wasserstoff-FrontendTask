@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// List editor for .lt files
 const ListMaker = ({ list, setList, filePath }) => {
     const [itemText, setItemText] = useState('');
 

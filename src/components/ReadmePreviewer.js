@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { marked } from 'marked';
 
+// ReadmePreviewer for editing and previewing .readme files
 const ReadmePreviewer = ({ content, setReadme, filePath }) => {
     const [previewMode, setPreviewMode] = useState(false);
     const [formattedContent, setFormattedContent] = useState(content);
@@ -17,8 +18,9 @@ const ReadmePreviewer = ({ content, setReadme, filePath }) => {
         setReadme(filePath, newContent);
     };
 
+    // Function to render markdown content as HTML
     const renderMarkdown = (markdown) => {
-        return { __html: marked.parse(markdown) };
+        return { __html: marked.parse(markdown) };  // Use marked library to parse markdown to HTML
     };
 
     return (
@@ -44,6 +46,7 @@ const ReadmePreviewer = ({ content, setReadme, filePath }) => {
                     className="markdown-body h-[90%] overflow-y-auto bg-gray-700 text-white p-4"
                     style={{ minHeight: '300px' }}
                 >
+                    {/* Render the markdown content as HTML */}
                     <div dangerouslySetInnerHTML={renderMarkdown(formattedContent)} />
                 </div>
             )}

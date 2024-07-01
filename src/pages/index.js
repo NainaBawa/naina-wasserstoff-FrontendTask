@@ -15,7 +15,7 @@ export default function Home() {
     selectedFile,
     fileContents,
     updateFileContent,
-  } = useIDE();
+  } = useIDE(); // Accessing IDE context values
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -23,11 +23,13 @@ export default function Home() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const renderContent = () => {
-    if (!selectedFile) return <div className="text-center text-vscode-text">Select a file to view its content</div>;
+  const EditorPanel = () => {
+    if (!selectedFile) return <div className="h-full flex items-center justify-center text-center text-vscode-text">Select a file to view its content</div>;
 
     const filePath = selectedFile.path.length > 0 ? `${selectedFile.path.join('/')}/${selectedFile.name}` : selectedFile.name;
     const extension = selectedFile.name.split('.').pop();
+
+    // Viewing different editor based on extension of the file
     switch (extension) {
       case 'ed':
         return (
@@ -62,9 +64,8 @@ export default function Home() {
         isSidebarOpen={isSidebarOpen}
       />
       <div className="flex-1 p-4">
-        {renderContent()}
+        {EditorPanel()}
       </div>
-      {/* Toggle button for small screens */}
       <button
         className="fixed bottom-4 right-4 bg-vscode-sidebar visible md:invisible text-white p-4 rounded-full shadow-lg z-50"
         onClick={toggleSidebar}

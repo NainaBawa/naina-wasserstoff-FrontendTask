@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Text editor for .ed files
 const TextEditor = ({ content, onChange }) => {
     return (
         <div className="p-6 bg-gray-800 h-full text-white">

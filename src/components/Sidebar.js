@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faFile, faFolderPlus, faFileAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useIDE } from '../contexts/IDEContext';
 
+// SidebarItem for rendering each item (folder or file as in structure) in the sidebar
 const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick }) => {
   if (item.type === 'folder') {
     return (
@@ -45,6 +46,7 @@ const SidebarItem = ({ item, path, onCreateFolder, onCreateFile, handleFileClick
   }
 };
 
+// Sidebar to render the entire sidebar
 const Sidebar = ({ structure, isSidebarOpen }) => {
   const { handleCreateFolder, handleCreateFile, handleFileClick } = useIDE();
 

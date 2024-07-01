@@ -3,8 +3,8 @@ import Modal from '../components/Modal';
 
 const IDEContext = createContext();
 
+// Context provider to wrap the app with IDE context
 export const IDEProvider = ({ children }) => {
-  // Initial state setup
   const initialStructure = [
     {
       type: 'folder',
@@ -21,7 +21,7 @@ export const IDEProvider = ({ children }) => {
   const [modalType, setModalType] = useState('');
   const [currentPath, setCurrentPath] = useState([]);
 
-  // Load data from localStorage on component mount
+  // Load data from localStorage when component is mounted
   useEffect(() => {
     const storedStructure = localStorage.getItem('ide_structure');
     const storedFileContents = localStorage.getItem('ide_fileContents');
@@ -34,7 +34,7 @@ export const IDEProvider = ({ children }) => {
     }
   }, []);
 
-  // Update localStorage whenever structure or fileContents change
+  // Update localStorage whenever there is a change in structure or fileContents
   useEffect(() => {
     localStorage.setItem('ide_structure', JSON.stringify(structure));
   }, [structure]);
@@ -43,7 +43,7 @@ export const IDEProvider = ({ children }) => {
     localStorage.setItem('ide_fileContents', JSON.stringify(fileContents));
   }, [fileContents]);
 
-  // Function to add a folder or file to the structure
+  // Function to add a folder or file to the structure recursively
   const addFolderOrFile = (currentStructure, path, item) => {
     if (path.length === 0) {
       return [...currentStructure, item];
@@ -60,25 +60,26 @@ export const IDEProvider = ({ children }) => {
     });
   };
 
-  // Handlers for creating folder and file
+  // Handlers for creating new folder
   const handleCreateFolder = (path = []) => {
     setModalOpen(true);
     setModalType('folder');
     setCurrentPath(path);
   };
 
+  // Handlers for creating new file
   const handleCreateFile = (path = []) => {
     setModalOpen(true);
     setModalType('file');
     setCurrentPath(path);
   };
 
-  // Handler for file click
+  // Handler for file click in sidebar
   const handleFileClick = (file) => {
     setSelectedFile(file);
   };
 
-  // Handler for updating file content
+  // Handler for updating the file content
   const updateFileContent = (filePath, content) => {
     setFileContents((prevContents) => ({
       ...prevContents,
@@ -86,7 +87,7 @@ export const IDEProvider = ({ children }) => {
     }));
   };
 
-  // Handler for submitting modal form
+  // Handler for submitting input name for folder/file
   const handleModalSubmit = (name) => {
     setModalOpen(false);
     if (name) {

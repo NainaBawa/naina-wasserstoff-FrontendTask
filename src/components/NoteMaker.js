@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
+// Notes editor for .note files
 const NoteMaker = ({ notes, setNotes, filePath }) => {
     const [noteText, setNoteText] = useState('');
     const categories = ['To Do', 'In Progress', 'Done'];
@@ -14,6 +15,7 @@ const NoteMaker = ({ notes, setNotes, filePath }) => {
         setNoteText('');
     };
 
+    // Function to handle the end of a drag and drop event
     const handleOnDragEnd = (result) => {
         if (!result.destination) return;
 
@@ -48,10 +50,11 @@ const NoteMaker = ({ notes, setNotes, filePath }) => {
                     Add Note
                 </button>
             </div>
+            {/* Drag and Drop Area */}
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <div className="flex flex-col md:flex-row md:space-x-4">
                     {categories.map(category => (
-                        <Droppable key={category} droppableId={category}>
+                        <Droppable key={category} droppableId={category}> {/* Droppable areas */}
                             {(provided) => (
                                 <div
                                     ref={provided.innerRef}
@@ -62,7 +65,7 @@ const NoteMaker = ({ notes, setNotes, filePath }) => {
                                     {notes
                                         .filter(note => note.category === category)
                                         .map((note, index) => (
-                                            <Draggable key={note.id} draggableId={note.id} index={index}>
+                                            <Draggable key={note.id} draggableId={note.id} index={index}> {/* Draggable components */}
                                                 {(provided) => (
                                                     <div
                                                         ref={provided.innerRef}

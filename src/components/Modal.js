@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// Modal to take input of file/folder name
 const Modal = ({ isOpen, onClose, onSubmit, isFolder }) => {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
-  const inputRef = useRef(null);
-  const modalRef = useRef(null);
+  const inputRef = useRef(null); // Reference to the input element for focusing
+  const modalRef = useRef(null); // Reference to the modal element for shaking animation
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus(); // Focus the input element when the modal opens
     }
   }, [isOpen]);
 
@@ -34,6 +35,7 @@ const Modal = ({ isOpen, onClose, onSubmit, isFolder }) => {
     }
   };
 
+  // Function to shake the modal on error
   const shakeModal = () => {
     modalRef.current.classList.add('animate-shake');
     setTimeout(() => {
@@ -51,14 +53,15 @@ const Modal = ({ isOpen, onClose, onSubmit, isFolder }) => {
         </h2>
         <input
           type="text"
-          value={name}
+          value={name} // Bind the input value to the name state
           onChange={(e) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
           ref={inputRef}
           className="border p-2 w-full mb-2 bg-vscode-background text-vscode-ide-text"
           placeholder={`Enter ${isFolder ? 'folder' : 'file'} name`}
         />
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        {/* Display error message */}
+        {error && <p className="text-red-500 text-sm mb-2">{error}</p>} 
         <div className="flex justify-end">
           <button
             onClick={onClose}
