@@ -44,8 +44,8 @@ const Modal = ({ isOpen, onClose, onSubmit, isFolder }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div ref={modalRef} className="bg-vscode-sidebar p-4 rounded shadow-md w-1/3">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div ref={modalRef} className="bg-vscode-sidebar p-4 rounded shadow-md w-4/5 sm:w-1/2 md:w-1/3 lg:w-1/4">
         <h2 className="text-lg font-bold mb-4 text-vscode-text">
           {isFolder ? 'Create Folder' : 'Create File'}
         </h2>
@@ -62,13 +62,13 @@ const Modal = ({ isOpen, onClose, onSubmit, isFolder }) => {
         <div className="flex justify-end">
           <button
             onClick={onClose}
-            className="mr-2 p-2 bg-gray-500 text-white rounded"
+            className="mr-2 p-2 bg-gray-500 text-white rounded hover:bg-gray-600"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
-            className="p-2 bg-blue-500 text-white rounded"
+            className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Create
           </button>

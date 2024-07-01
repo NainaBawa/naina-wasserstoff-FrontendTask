@@ -1,5 +1,9 @@
+import React, { useState } from 'react';
 import { useIDE } from '../contexts/IDEContext';
 import Sidebar from '../components/Sidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolder, faFile, faFolderPlus, faFileAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+
 import TextEditor from '../components/TextEditor';
 import NoteMaker from '../components/NoteMaker';
 import ListMaker from '../components/ListMaker';
@@ -11,10 +15,13 @@ export default function Home() {
     selectedFile,
     fileContents,
     updateFileContent,
-    handleCreateFolder,
-    handleCreateFile,
-    handleFileClick,
   } = useIDE();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const renderContent = () => {
     if (!selectedFile) return <div className="text-center text-vscode-text">Select a file to view its content</div>;
@@ -49,17 +56,21 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen bg-vscode-bg text-vscode-text">
+    <div className="flex h-screen bg-vscode-bg text-vscode-text relative">
       <Sidebar
         structure={structure}
-        onCreateFolder={handleCreateFolder}
-        onCreateFile={handleCreateFile}
-        handleFileClick={handleFileClick}
-        className="w-1/4" // Set sidebar width
+        isSidebarOpen={isSidebarOpen}
       />
       <div className="flex-1 p-4">
         {renderContent()}
       </div>
+      {/* Toggle button for small screens */}
+      <button
+        className="fixed bottom-4 right-4 bg-vscode-sidebar visible md:invisible text-white p-4 rounded-full shadow-lg z-50"
+        onClick={toggleSidebar}
+      >
+        <FontAwesomeIcon icon={isSidebarOpen ? faTimes : faFolder} />
+      </button>
     </div>
   );
 }
