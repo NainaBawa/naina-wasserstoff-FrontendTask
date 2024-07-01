@@ -1,9 +1,10 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import Modal from '../components/Modal';
 
 const IDEContext = createContext();
 
 export const IDEProvider = ({ children }) => {
+  // Initial state setup
   const initialStructure = [
     {
       type: 'folder',
@@ -20,6 +21,29 @@ export const IDEProvider = ({ children }) => {
   const [modalType, setModalType] = useState('');
   const [currentPath, setCurrentPath] = useState([]);
 
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    const storedStructure = localStorage.getItem('ide_structure');
+    const storedFileContents = localStorage.getItem('ide_fileContents');
+
+    if (storedStructure) {
+      setStructure(JSON.parse(storedStructure));
+    }
+    if (storedFileContents) {
+      setFileContents(JSON.parse(storedFileContents));
+    }
+  }, []);
+
+  // Update localStorage whenever structure or fileContents change
+  useEffect(() => {
+    localStorage.setItem('ide_structure', JSON.stringify(structure));
+  }, [structure]);
+
+  useEffect(() => {
+    localStorage.setItem('ide_fileContents', JSON.stringify(fileContents));
+  }, [fileContents]);
+
+  // Function to add a folder or file to the structure
   const addFolderOrFile = (currentStructure, path, item) => {
     if (path.length === 0) {
       return [...currentStructure, item];
@@ -36,6 +60,7 @@ export const IDEProvider = ({ children }) => {
     });
   };
 
+  // Handlers for creating folder and file
   const handleCreateFolder = (path = []) => {
     setModalOpen(true);
     setModalType('folder');
@@ -48,10 +73,12 @@ export const IDEProvider = ({ children }) => {
     setCurrentPath(path);
   };
 
+  // Handler for file click
   const handleFileClick = (file) => {
     setSelectedFile(file);
   };
 
+  // Handler for updating file content
   const updateFileContent = (filePath, content) => {
     setFileContents((prevContents) => ({
       ...prevContents,
@@ -59,13 +86,14 @@ export const IDEProvider = ({ children }) => {
     }));
   };
 
+  // Handler for submitting modal form
   const handleModalSubmit = (name) => {
     setModalOpen(false);
     if (name) {
       const item = { type: modalType, name, children: modalType === 'folder' ? [] : undefined, path: currentPath };
       const filePath = currentPath.length > 0 ? `${currentPath.join('/')}/${name}` : name;
       setStructure((prevStructure) => addFolderOrFile(prevStructure, currentPath, item));
-      
+
       if (modalType === 'file') {
         const extension = name.split('.').pop();
         let content;

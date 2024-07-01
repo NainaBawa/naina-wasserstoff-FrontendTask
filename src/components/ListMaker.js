@@ -10,7 +10,7 @@ const ListMaker = ({ list, setList, filePath }) => {
 
     return (
         <div className="p-6 bg-gray-800 h-full text-white">
-            <div className="max-w-md mx-auto mb-4 flex space-x-2">
+            <div className="max-w-md mx-auto mb-4 flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2">
                 <input
                     value={itemText}
                     onChange={(e) => setItemText(e.target.value)}

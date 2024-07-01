@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {marked} from 'marked';
+import { marked } from 'marked';
 
 const ReadmePreviewer = ({ content, setReadme, filePath }) => {
     const [previewMode, setPreviewMode] = useState(false);
@@ -36,18 +36,15 @@ const ReadmePreviewer = ({ content, setReadme, filePath }) => {
                 <textarea
                     value={formattedContent}
                     onChange={(e) => handleInputChange(e.target.value)}
-                    className="w-full h-4/5 border border-gray-600 p-2 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-auto"
+                    className="w-full min-h-[300px] md:min-h-[400px] border border-gray-600 p-2 rounded-lg shadow-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none overflow-y-auto"
                     placeholder="Type your README content here..."
                 />
             ) : (
                 <div
-                    className="markdown-body h-4/5 overflow-y-auto bg-gray-700 text-white"
-                    style={{ padding: '10px' }}
+                    className="markdown-body h-[90%] overflow-y-auto bg-gray-700 text-white p-4"
+                    style={{ minHeight: '300px' }}
                 >
-                    <div
-                        className="p-4"
-                        dangerouslySetInnerHTML={renderMarkdown(formattedContent)}
-                    />
+                    <div dangerouslySetInnerHTML={renderMarkdown(formattedContent)} />
                 </div>
             )}
         </div>

@@ -32,13 +32,9 @@ export default function Home() {
           />
         );
       case 'note':
-        console.log(fileContents[`${selectedFile.path}/${selectedFile.name}`])
-        return <NoteMaker notes={fileContents[filePath]} setNotes={updateFileContent} filePath={filePath}/>;
+        return <NoteMaker notes={fileContents[filePath]} setNotes={updateFileContent} filePath={filePath} />;
       case 'lt':
-        console.log(fileContents[filePath])
-        console.log(fileContents[filePath], filePath, fileContents)
-
-        return <ListMaker list={fileContents[filePath]} setList={updateFileContent} filePath={filePath}/>;
+        return <ListMaker list={fileContents[filePath]} setList={updateFileContent} filePath={filePath} />;
       case 'readme':
         return (
           <ReadmePreviewer
@@ -52,8 +48,6 @@ export default function Home() {
     }
   };
 
-  console.log('structure', structure)
-
   return (
     <div className="flex h-screen bg-vscode-bg text-vscode-text">
       <Sidebar
@@ -61,6 +55,7 @@ export default function Home() {
         onCreateFolder={handleCreateFolder}
         onCreateFile={handleCreateFile}
         handleFileClick={handleFileClick}
+        className="w-1/4" // Set sidebar width
       />
       <div className="flex-1 p-4">
         {renderContent()}

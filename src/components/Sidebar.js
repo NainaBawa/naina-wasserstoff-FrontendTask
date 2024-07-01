@@ -51,17 +51,17 @@ const Sidebar = ({ structure }) => {
   return (
     <div className="w-1/4 bg-vscode-sidebar p-4 h-full ">
       <h1 className="text-lg font-bold mb-4 text-center text-vscode-text">Super Editor</h1>
-      <div className="h-[95%] overflow-y-auto overflow-x-auto">
-      {structure.map((item, index) => (
-        <SidebarItem
-          key={index}
-          item={item}
-          path={[]}
-          onCreateFolder={handleCreateFolder}
-          onCreateFile={handleCreateFile}
-          handleFileClick={handleFileClick}
-        />
-      ))}
+      <div className="h-[calc(100%-3rem)] overflow-y-auto overflow-x-auto">
+        {structure.map((item, index) => (
+          <SidebarItem
+            key={index}
+            item={item}
+            path={[]}
+            onCreateFolder={handleCreateFolder}
+            onCreateFile={handleCreateFile}
+            handleFileClick={handleFileClick}
+          />
+        ))}
       </div>
     </div>
   );
